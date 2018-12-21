@@ -14,7 +14,7 @@ class PackageServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/assets/js/angularjs' => resource_path('js/vendor/angularjs'),
+            dirname(__DIR__) . '/assets/js/angularjs' => resource_path('js/vendor/angularjs'),
         ], 'diary');
     }
 
