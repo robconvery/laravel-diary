@@ -20,17 +20,15 @@ class DiaryDataTest extends TestCase
     {
         // Arrange
         $this->withoutExceptionHandling();
-        $start = Carbon::now();
-        $end = Carbon::now()->addMonth();
+        $date = Carbon::now();
 
         // Act
         $response = $this->get(route('diary-entries', [
-            'start' => $start->toDateString(),
-            'end' => $end->toDateString(),
+            'date' => $date->toDateString()
         ]));
 
         // Assert
         $response->assertOk();
-        $response->assertJsonStructure(['data']);
+        $response->assertJsonStructure([$date->toDateString()]);
     }
 }
