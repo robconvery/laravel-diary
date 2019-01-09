@@ -1,11 +1,13 @@
 {
     "name": "robconvery/laravel-diary",
     "description": "Laravel package to scaffold a diary",
+    "minimum-stability": "dev",
     "require": {},
     "require-dev": {
         "phpunit/phpunit": "^7.5",
         "orchestra/testbench": "^3.7",
-        "squizlabs/php_codesniffer": "^3.4"
+        "squizlabs/php_codesniffer": "^3.4",
+        "fzaninotto/faker": "^1.9@dev"
     },
     "license": "proprietary",
     "authors": [
