@@ -147,7 +147,7 @@ class FakeDiaryEntry implements DiaryEntryInterface
             'datetime' => $date,
             'title' => $faker->company,
             'description' => collect($faker->paragraphs)->implode("\n"),
-            'link' => '/diary',
+            'link' => random_int(0, 1) ?: '/diary',
             'postcode' => random_int(0, 1) ?: $faker->postcode,
             'location' => $faker->city
         ]);

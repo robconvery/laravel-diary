@@ -36,15 +36,18 @@
 @else
                 list-group-item-success
 @endif">
-                <h5>@{{entry.title}}</h5>
-                <p>
+                <div>
+                    <a ng-if="entry.link.length > 0" href="@{{entry.link}}">@{{entry.title}}</a>
+                    <span ng-if="entry.link == null">@{{entry.title}}</span>
+                </div>
+
+                <small>
                     @{{entry.location}}
-                    <span>
-                        <a ng-if="entry.postcode.length" target="_blank" href="https://maps.google.com/maps?q=@{{entry.postcode}}">
-                            @{{entry.postcode}}
-                        </a>
-                    </span>
-                </p>
+                    <a ng-if="entry.postcode.length" target="_blank" href="https://maps.google.com/maps?q=@{{entry.postcode}}">
+                        @{{entry.postcode}}
+                    </a>
+                </small>
+
             </li>
         </ul>
     </div>
