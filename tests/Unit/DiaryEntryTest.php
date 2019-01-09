@@ -39,7 +39,49 @@ class DiaryEntryTest extends TestCase
 
         // Assert
         $this->assertInstanceOf(Collection::class, $entries);
-        $this->assertInstanceOf(FakeDiaryEntry::class, $entries->first());
+        $this->assertTrue(is_array($entries->first()));
         $this->assertCount(1, $entries);
     }
+
+    /**
+     * @test
+     * @group can_see_postcode
+     */
+    public function can_see_postcode()
+    {
+        // Arrange
+        $faker = Factory::create('en_GB');
+        $postcode = $faker->postcode;
+
+        // Act
+        $FakeDiaryEntry = $this->app->make(DiaryEntryInterface::class, [[
+            'postcode' => $postcode
+        ]]);
+
+        // Assert
+        $this->assertInstanceOf(FakeDiaryEntry::class, $FakeDiaryEntry);
+        $this->assertEquals($postcode, $FakeDiaryEntry->postcode);
+    }
+
+    /**
+     * @test
+     * @group can_see_state
+     */
+    public function can_see_state()
+    {
+        // Arrange
+        $faker = Factory::create('en_GB');
+        $state = $faker->city;
+
+        // Act
+        $FakeDiaryEntry = $this->app->make(DiaryEntryInterface::class, [[
+            'location' => $state
+        ]]);
+
+        // Assert
+        $this->assertInstanceOf(FakeDiaryEntry::class, $FakeDiaryEntry);
+        $this->assertEquals($state, $FakeDiaryEntry->location);
+    }
+
+
 }
