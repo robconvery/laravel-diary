@@ -39,8 +39,8 @@
                 <h5>@{{entry.title}}</h5>
                 <p>
                     @{{entry.location}}
-                    <span ng-if="entry.postcode.length">
-                        <a target="_blank" href="https://maps.google.com/maps?q=@{{entry.postcode}}">
+                    <span>
+                        <a ng-if="entry.postcode.length" target="_blank" href="https://maps.google.com/maps?q=@{{entry.postcode}}">
                             @{{entry.postcode}}
                         </a>
                     </span>

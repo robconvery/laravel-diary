@@ -3,6 +3,7 @@
 angular.module('diaryService', [])
     .factory('DiaryProvider', function($http) {
         return {
+
             month : function(date) {
                 if (angular.isString(date) && date.length) {
                     return $http({
@@ -16,5 +17,12 @@ angular.module('diaryService', [])
                     });
                 }
             },
+
+            entries: function (date) {
+                return $http({
+                   method: 'get',
+                   url: '/diary/entries/' + encodeURIComponent(date)
+                });
+            }
         }
     });

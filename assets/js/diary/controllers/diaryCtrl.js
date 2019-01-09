@@ -1,5 +1,5 @@
 
-angular.module('diaryCtrl', ['ngSanitize'])
+angular.module('diaryCtrl', ['ngSanitize', 'ngDraggable'])
     .controller('diaryController', function ($scope, DiaryProvider, $compile){
 
         $scope.loading = true;
@@ -10,7 +10,8 @@ angular.module('diaryCtrl', ['ngSanitize'])
         };
 
         $scope.previous = function() {
-            alert('previous ' + document.getElementById("start").value);
+            var date = document.getElementById("start").value;
+            $scope.reload(date);
         };
 
         $scope.reload = function(date) {
