@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Robconvery\Laraveldiary\DiaryEntryInterface;
 
 class DiaryController extends Controller
 {
@@ -32,6 +33,10 @@ class DiaryController extends Controller
         return $this->daysView(Carbon::parse($date));
     }
 
+    /**
+     * @param Carbon $date
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     protected function daysView(Carbon $date)
     {
         // Calendar start
@@ -51,6 +56,7 @@ class DiaryController extends Controller
             'previous' => (clone $date)->subMonth(),
             'next' => (clone $date)->endOfMonth()->addDay(),
             'first' => $start,
+            'current' => clone $start,
             'last' => $end
         ]);
     }
