@@ -24,3 +24,22 @@ To create the default file structure
 ```$xslt
 artisan vendor:publish --tag=diary
 ``` 
+To bespoke the routes add the following to `routes/web.php`. Adjust to suite.
+```$xslt
+Route::group([
+    'middleware' => ['auth']
+], function () {
+
+    Route::get('/diary', 'DiaryController@diary')
+        ->name('diary');
+
+    Route::get('/diary/days', 'DiaryController@days')
+        ->name('diary-days');
+
+    Route::get('/diary/days/{date}', 'DiaryController@daysWithDate')
+        ->name('diary-days-date');
+
+    Route::get('/diary/entries/{date}', 'DiaryDataController@entries')
+        ->name('diary-entries');
+});
+```
