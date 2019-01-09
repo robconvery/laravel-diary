@@ -125,7 +125,6 @@
             'diaryService'
         ]);
     </script>
-
 @endsection
 
 @section('content')
