@@ -31,9 +31,20 @@
 
     <div class="day-data" ng-controller="diaryDataController" ng-init="init({date: '{{ $date->toDateString() }}', start: '{{ $start->toDateString() }}', end: '{{ $end->toDateString() }}'})">
         <ul class="list-group" ng-repeat="entry in entries">
-            <li ng-drag="true" ng-drag-data="{name:'test'}" data-allow-transform="true" class="list-group-item list-group-item-success">
+            <li ng-drag="true" ng-drag-data="{name:'test'}" data-allow-transform="true" class="list-group-item @if(\Carbon\Carbon::now()->startOfDay() > $date)
+                list-group-item-secondary
+@else
+                list-group-item-success
+@endif">
                 <h5>@{{entry.title}}</h5>
-                <p>@{{ entry.description }}</p>
+                <p>
+                    @{{entry.location}}
+                    <span ng-if="entry.postcode.length">
+                        <a target="_blank" href="https://maps.google.com/maps?q=@{{entry.postcode}}">
+                            @{{entry.postcode}}
+                        </a>
+                    </span>
+                </p>
             </li>
         </ul>
     </div>

@@ -15,11 +15,6 @@ use Faker\Factory;
 class FakeDiaryEntry implements DiaryEntryInterface
 {
     /**
-     * @var Carbon $date
-     */
-    private $date;
-
-    /**
      * @var string $link
      */
     private $link;
@@ -39,7 +34,15 @@ class FakeDiaryEntry implements DiaryEntryInterface
      */
     private $datetime;
 
-    private $factory;
+    /**
+     * @var string $location
+     */
+    private $location;
+
+    /**
+     * @var
+     */
+    private $postcode;
 
     /**
      * FakeDiaryEntry constructor.
@@ -49,7 +52,6 @@ class FakeDiaryEntry implements DiaryEntryInterface
     {
         if (is_array($data)) {
             $this->exchangeArray($data);
-            $this->factory = Factory::create();
         }
     }
 
@@ -68,6 +70,10 @@ class FakeDiaryEntry implements DiaryEntryInterface
     {
         $this->datetime = isset($data['datetime']) && $data['datetime'] instanceof Carbon ?
             $data['datetime'] : null;
+        $this->location = isset($data['location']) && is_string($data['location']) ?
+            $data['location'] : null;
+        $this->postcode = isset($data['postcode']) && is_string($data['postcode']) ?
+            $data['postcode'] : null;
         $this->link = isset($data['link']) && is_string($data['link']) ?
             $data['link'] : null;
         $this->title = isset($data['title']) && is_string($data['title']) ?
@@ -85,7 +91,9 @@ class FakeDiaryEntry implements DiaryEntryInterface
             'date' => $this->datetime->toDateString(),
             'link' => $this->link,
             'title' => $this->title,
-            'description' => $this->description
+            'description' => $this->description,
+            'postcode' => $this->postcode,
+            'location' => $this->location
         ];
     }
 
@@ -109,15 +117,16 @@ class FakeDiaryEntry implements DiaryEntryInterface
      */
     private function fakeData(): Collection
     {
+        $faker = Factory::create('en_GB');
 
         // a list of all the days in the current month
-        $dates = $this->periodToCollection()->map(function ($date) {
+        $dates = $this->periodToCollection()->map(function ($date) use($faker) {
             $data = [];
             for ($i=0; $i < random_int(1, 3); $i++) {
                 array_push(
                     $data,
                     // Creates a fake diary entry
-                    $this->createInstance(Factory::create(), $date)->toArray()
+                    $this->createInstance($faker, $date)->toArray()
                 );
             }
             return $data;
@@ -130,6 +139,7 @@ class FakeDiaryEntry implements DiaryEntryInterface
      * @param \Faker\Generator $faker
      * @param Carbon $date
      * @return FakeDiaryEntry
+     * @throws \Exception
      */
     private function createInstance(\Faker\Generator $faker, Carbon $date): FakeDiaryEntry
     {
@@ -137,7 +147,9 @@ class FakeDiaryEntry implements DiaryEntryInterface
             'datetime' => $date,
             'title' => $faker->company,
             'description' => collect($faker->paragraphs)->implode("\n"),
-            'link' => '/diary'
+            'link' => '/diary',
+            'postcode' => random_int(0, 1) ?: $faker->postcode,
+            'location' => $faker->city
         ]);
     }
 
@@ -162,7 +174,7 @@ class FakeDiaryEntry implements DiaryEntryInterface
     private function getPeriod(): \DatePeriod
     {
         return new \DatePeriod(
-            Carbon::now(),
+            Carbon::now()->subDays(3),
             new \DateInterval('P1D'),
             Carbon::now()->addMonth()
         );
