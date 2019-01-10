@@ -14,7 +14,7 @@ interface DiaryEntryInterface
     /**
      * @return array
      */
-    public function toArray(): array;
+    public function toArray();
 
     /**
      * @param Carbon $date
