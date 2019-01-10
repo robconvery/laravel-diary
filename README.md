@@ -19,11 +19,23 @@ Add to `require` section of composer.json
     "robconvery/laravel-diary": "^1.0"
 },
 ```
+Run `composer update`
 
-To create the default file structure
+Create the default file structure
 ```$xslt
 artisan vendor:publish --tag=diary
-``` 
+```
+This process will also create the test `tests\Feature\Diary\DiaryDataTest.php`
+
+Identify any alterations by running the automated test.
+
+```$xslt
+phpunit --group get_diary_test_data
+```
+
+
+## Setup
+ 
 To bespoke the routes add the following to `routes/web.php`. Adjust to suite.
 ```$xslt
 Route::group([
@@ -43,3 +55,26 @@ Route::group([
         ->name('diary-entries');
 });
 ```
+Create a class to act as the `DiaryEntryInterface`.
+
+```$xslt
+// Example class
+class Diary implements Robconvery\Laraveldiary\DiaryEntryInterface
+{
+    ...
+}
+```
+
+Create a `diary` provider within the application.
+```$xslt
+artisan make:provider DiaryServiceProvider
+```
+
+Add the following code to the service provider you created.
+```$xslt
+App()->bind(DiaryEntryInterface::class, function($app, $params) {
+    // change class as required
+    return new Diary();
+});
+``` 
+ 
