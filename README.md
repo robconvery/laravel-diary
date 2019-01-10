@@ -65,10 +65,21 @@ class Diary implements Robconvery\Laraveldiary\DiaryEntryInterface
 }
 ```
 
-Create a `diary` provider within the application.
+Create a `diary` service provider within the application.
 ```$xslt
 artisan make:provider DiaryServiceProvider
 ```
+Reference this provider within `config\app.php`
+
+```$xslt
+'providers' => [
+    /*
+     * Application Service Providers...
+     */
+    \App\Providers\DiaryServiceProvider::class
+]
+``` 
+
 
 Add the following code to the service provider you created.
 ```$xslt
