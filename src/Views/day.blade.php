@@ -1,4 +1,7 @@
-<div class="day day-calendar @if($date < \Carbon\Carbon::now()->startOfDay() && $today->isToday() === true)
+<div ng-drop="true"
+     ng-drop-success="onDropComplete($data, '{{ $date->toDateString() }}', $event)"
+     ng-init="init({date: '{{ $date->toDateString() }}', start: '{{ $start->toDateString() }}', end: '{{ $end->toDateString() }}'})"
+     class="day day-calendar @if($date < \Carbon\Carbon::now()->startOfDay() && $today->isToday() === true)
  mobile-hide
 @endif">
 
@@ -29,9 +32,14 @@
 
     </div>
 
-    <div class="day-data" ng-controller="diaryDataController" ng-init="init({date: '{{ $date->toDateString() }}', start: '{{ $start->toDateString() }}', end: '{{ $end->toDateString() }}'})">
-        <ul class="list-group" ng-repeat="entry in entries">
-            <li ng-drag="true" ng-drag-data="{name:'test'}" data-allow-transform="true" class="list-group-item @if(\Carbon\Carbon::now()->startOfDay() > $date)
+    <div class="day-data">
+
+        <ul class="list-group" ng-repeat="entry in entries('{{$date->toDateString()}}')">
+
+            <li ng-drag="true"
+                ng-drag-data="{entry}"
+                data-allow-transform="true"
+                class="list-group-item @if(\Carbon\Carbon::now()->startOfDay() > $date)
                 list-group-item-secondary
 @else
                 list-group-item-success

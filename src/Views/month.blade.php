@@ -31,12 +31,12 @@
 
 <input type="hidden" id="start" name="start" value="{{ $previous->toDateString() }}">
 <input type="hidden" id="end" name="end" value="{{ $next->toDateString() }}">
-
-<div class="row">
+<div class="row" ng-controller="diaryDataController">
 @php
     $index = 0;
 @endphp
 @while ($current < $last)
+
     @include('diary::day', [
         'date' => $current,
         'first' => $index === 0 ?: false,

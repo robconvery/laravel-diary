@@ -12,4 +12,7 @@ Route::get('/diary/days/{date}', 'App\Http\Controllers\DiaryController@daysWithD
 Route::get('/diary/entries/{date}', 'App\Http\Controllers\DiaryDataController@entries')
     ->name('diary-entries');
 
+Route::post('/diary/{id}/update', 'App\Http\Controllers\DiaryDataController@store')
+    ->name('diary-update');
+
 // year/month

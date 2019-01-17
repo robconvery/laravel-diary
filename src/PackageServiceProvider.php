@@ -37,8 +37,13 @@ class PackageServiceProvider extends ServiceProvider
         include __DIR__ . '/routes.php';
 
         App()->bind(DiaryEntryInterface::class, function($app, $params) {
-            $data = is_array(current($params)) ? current($params) : null;
-            return new FakeDiaryEntry($data);
+            $id = request()->route('id');
+            if ($id) {
+                return FakeDiaryEntry::find($id) ?? abort(404);
+            } else {
+                $data = is_array(current($params)) ? current($params) : null;
+                return new FakeDiaryEntry($data);
+            }
         });
     }
 }
