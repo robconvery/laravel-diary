@@ -1,5 +1,7 @@
 @extends('app::layouts.dashboard.dashboard')
 
+@section('title', 'Diary')
+
 @section('css')
     <style>
 
