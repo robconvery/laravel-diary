@@ -34,27 +34,29 @@
 
     <div class="day-data">
 
-        <ul class="list-group" ng-repeat="entry in entries('{{$date->toDateString()}}')">
+        <ul class="list-group" ng-repeat="entry in diary['{{$date->toDateString()}}']">
 
-            <li ng-drag="true"
-                ng-drag-data="{entry}"
+            <li
+                ng-drop="true"
+                ng-drop-success="onDragComplete($index,$data,$event)"
                 data-allow-transform="true"
-                class="list-group-item @if(\Carbon\Carbon::now()->startOfDay() > $date)
-                list-group-item-secondary
-@else
-                list-group-item-success
-@endif">
-                <div>
-                    <a ng-if="entry.link.length > 0" href="@{{entry.link}}">@{{entry.title}}</a>
-                    <span ng-if="entry.link == null">@{{entry.title}}</span>
-                </div>
+                class="list-group-item p-0 bg-light">
 
-                <small>
-                    @{{entry.location}}
-                    <a ng-if="entry.postcode.length" target="_blank" href="https://maps.google.com/maps?q=@{{entry.postcode}}">
-                        @{{entry.postcode}}
-                    </a>
-                </small>
+                <div ng-drag="true"
+                     ng-drag-data="{entry}"
+                     class="alert alert-success mb-0">
+                    <div>
+                        <a ng-if="entry.link.length > 0" href="@{{entry.link}}">@{{entry.title}}</a>
+                        <span ng-if="entry.link == null">@{{entry.title}}</span>
+                    </div>
+
+                    <small>
+                        @{{entry.location}}
+                        <a ng-if="entry.postcode.length" target="_blank" href="https://maps.google.com/maps?q=@{{entry.postcode}}">
+                            @{{entry.postcode}}
+                        </a>
+                    </small>
+                </div>
 
             </li>
         </ul>

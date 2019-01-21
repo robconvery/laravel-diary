@@ -1,5 +1,4 @@
 
-
 angular.module('diaryService', [])
     .factory('DiaryProvider', function($http) {
         return {
@@ -20,8 +19,26 @@ angular.module('diaryService', [])
 
             entries: function (date) {
                 return $http({
-                   method: 'get',
-                   url: '/diary/entries/' + encodeURIComponent(date)
+                    method: 'get',
+                    url: '/diary/entries/' + encodeURIComponent(date)
+                });
+            },
+
+            update : function (id, params) {
+                return $http({
+                    method: 'post',
+                    url: '/diary/' + encodeURIComponent(id) + '/update',
+                    params: params
+                });
+            },
+
+            reordered : function (day, ids) {
+                return $http({
+                    method: 'post',
+                    url: '/diary/reordered/' + encodeURIComponent(day),
+                    params: {
+                        order: ids
+                    }
                 });
             }
         }

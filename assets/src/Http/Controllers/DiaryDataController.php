@@ -27,7 +27,7 @@ class DiaryDataController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(DiaryEntryInterface $diary, Request $request, $id)
+    public function store(DiaryEntryInterface $diary, Request $request)
     {
         $datetime = $request->input('datetime');
         if (strtotime($datetime) === false) {
@@ -39,5 +39,20 @@ class DiaryDataController extends Controller
         return response()->json([
             'status' => 1
         ]);
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function reordered(Request $request)
+    {
+        $order = $request->input('order');
+        if (is_string($order)) {
+            collect(explode(',', $order))->map(function ($id, $index) {
+                $dairy = app()->make(DiaryEntryInterface::class, [['id' => (int)$id]]);
+                $dairy->sequence = $index;
+                $dairy->save();
+            });
+        }
     }
 }
