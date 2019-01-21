@@ -56,6 +56,9 @@
                             @{{entry.postcode}}
                         </a>
                     </small>
+
+                    <diary-entry></diary-entry>
+
                 </div>
 
             </li>

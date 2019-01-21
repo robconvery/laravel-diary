@@ -119,11 +119,13 @@
     <script src="{{ asset('js/ngDraggable.js') }}"></script>
     <script src="{{ asset('js/controllers/diaryCtrl.js') }}"></script>
     <script src="{{ asset('js/controllers/diaryDataCtrl.js') }}"></script>
+    <script src="{{ asset('js/controllers/diary-entry.component.js') }}"></script>
     <script src="{{ asset('js/services/diaryService.js') }}"></script>
     <script>
         var diaryApp = angular.module('diaryApp', [
             'diaryCtrl',
             'diaryDataCtrl',
+            'diaryEntryCtrl',
             'diaryService'
         ]);
     </script>
