@@ -42,7 +42,11 @@ class PackageServiceProvider extends ServiceProvider
                 return FakeDiaryEntry::find($id) ?? abort(404);
             } else {
                 $data = is_array(current($params)) ? current($params) : null;
-                return new FakeDiaryEntry($data);
+                if (isset($data['id'])) {
+                    return FakeDiaryEntry::find($data['id']) ?? abort(500);
+                } else {
+                    return new FakeDiaryEntry($data);
+                }
             }
         });
     }
