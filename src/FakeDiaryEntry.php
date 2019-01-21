@@ -231,7 +231,8 @@ class FakeDiaryEntry implements DiaryEntryInterface
      */
     private static function getDay(Carbon $day): array
     {
-        return Cache::get(static::getDayCacheKey($day));
+        $day = Cache::get(static::getDayCacheKey($day));
+        return !is_array($day) ? [] : $day;
     }
 
     /**
@@ -337,9 +338,9 @@ class FakeDiaryEntry implements DiaryEntryInterface
     private static function getPeriod(): \DatePeriod
     {
         return new \DatePeriod(
-            Carbon::now()->subDays(3),
+            Carbon::now()->subDays(1),
             new \DateInterval('P1D'),
-            Carbon::now()->addMonth()
+            Carbon::now()->addWeek()
         );
     }
 
@@ -354,5 +355,4 @@ class FakeDiaryEntry implements DiaryEntryInterface
         Cache::forever($key, $id);
         return $id;
     }
-
 }
