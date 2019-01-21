@@ -59,7 +59,7 @@ class FakeDiaryEntry implements DiaryEntryInterface
      * FakeDiaryEntry constructor.
      * @param array|null $data
      */
-    public function __construct(array $data=null)
+    public function __construct(array $data = null)
     {
         if (is_array($data)) {
             $this->exchangeArray($data);
@@ -166,8 +166,7 @@ class FakeDiaryEntry implements DiaryEntryInterface
                 if ($position !== false) {
                     static::storeDay($current->datetime, collect($original)
                         ->forget($position)
-                        ->toArray()
-                    );
+                        ->toArray());
                 }
             }
             // add this `id` to the relevant day array
@@ -177,8 +176,7 @@ class FakeDiaryEntry implements DiaryEntryInterface
                 if ($position === false) {
                     static::storeDay($this->datetime, collect($new)
                         ->push($this->id)
-                        ->toArray()
-                    );
+                        ->toArray());
                 }
             }
             // update diary entry

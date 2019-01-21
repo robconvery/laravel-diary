@@ -36,7 +36,7 @@ class PackageServiceProvider extends ServiceProvider
         $this->loadViewsFrom(resource_path('views'), 'app');
         include __DIR__ . '/routes.php';
 
-        App()->bind(DiaryEntryInterface::class, function($app, $params) {
+        App()->bind(DiaryEntryInterface::class, function ($app, $params) {
             $id = request()->route('id');
             if ($id) {
                 return FakeDiaryEntry::find($id) ?? abort(404);
