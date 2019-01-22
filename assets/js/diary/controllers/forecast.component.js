@@ -73,6 +73,8 @@ function forecastController(ForecastProvider) {
                     console.log(data.status, data);
                     ctrl.loading = false;
                 });
+        } else {
+            ctrl.loading = false;
         }
     });
 }
