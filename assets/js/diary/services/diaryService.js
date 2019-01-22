@@ -35,7 +35,7 @@ angular.module('diaryService', [])
             reordered : function (day, ids) {
                 return $http({
                     method: 'post',
-                    url: '/diary/reordered/' + encodeURIComponent(day),
+                    url: '/diary/reordered',
                     params: {
                         order: ids
                     }
