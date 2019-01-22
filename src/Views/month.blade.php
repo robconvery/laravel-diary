@@ -31,7 +31,7 @@
 
 <input type="hidden" id="start" name="start" value="{{ $previous->toDateString() }}">
 <input type="hidden" id="end" name="end" value="{{ $next->toDateString() }}">
-<div class="row" ng-controller="diaryDataController">
+<div class="row" ng-controller="diaryDataController as ctrl">
 @php
     $index = 0;
 @endphp
