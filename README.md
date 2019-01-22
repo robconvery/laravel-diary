@@ -53,6 +53,13 @@ Route::group([
 
     Route::get('/diary/entries/{date}', 'DiaryDataController@entries')
         ->name('diary-entries');
+        
+    Route::post('/diary/{id}/update', 'DiaryDataController@store')
+        ->name('diary-update');
+    
+    Route::post('/diary/reordered', 'DiaryDataController@reordered')
+        ->name('diary-reordered');
+    
 });
 ```
 Create a class to act as the `DiaryEntryInterface`.
