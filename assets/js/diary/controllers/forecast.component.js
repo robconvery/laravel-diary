@@ -9,7 +9,7 @@ component('forecastSeventyTwoHour', {
         '<span class="mr-2">' +
         '<span ng-bind-html="$ctrl.weatherIcon(forecast.description)"></span>' +
         '</span>' +
-        '<span ng-switch="(forecast.min_temp === forecast.min_temp)">' +
+        '<span ng-switch="(forecast.temp_min === forecast.temp_max)">' +
         '<span ng-switch-when="true">{{forecast.temp}}</span>' +
         '<span ng-switch-when="false">{{forecast.temp_min}}-{{forecast.temp_max}}</span>' +
         '\t&#176;</span>&nbsp;' +
@@ -33,9 +33,7 @@ function forecastController(ForecastProvider) {
 
     ctrl.loading = true;
     ctrl.forecasts = [];
-
     ctrl.weatherIcon = function(text) {
-        console.log(text);
         if (text.match(/snow/gi) !== null) {
             return '<i class="far fa-snowflake"></i>';
         } else if (text.match(/light rain/gi) !== null) {
@@ -55,8 +53,15 @@ function forecastController(ForecastProvider) {
 
     angular.element(document).ready(function(){
 
+        let now = new Date();
+        now.setDate(now.getDate()-1);
         let datetime = new Date(ctrl.entry.datetime);
-        if (ctrl.entry.hasOwnProperty('postcode') && ctrl.entry.postcode.length) {
+
+        if (
+            ctrl.entry.hasOwnProperty('postcode') &&
+            ctrl.entry.postcode.length > 0 &&
+            datetime > now
+        ) {
             ForecastProvider.get(
                 ctrl.entry.postcode,
                 datetime.toISOString().slice(0,10)
@@ -70,7 +75,6 @@ function forecastController(ForecastProvider) {
                     }
                     ctrl.loading = false;
                 }, function(data, status, headers, config) {
-                    console.log(data.status, data);
                     ctrl.loading = false;
                 });
         } else {
